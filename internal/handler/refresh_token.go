@@ -19,14 +19,14 @@ type RefreshTokenHandler struct {
 // Refresh godoc
 // @Summary     Refresh token  user
 // @Description Generates a new access token using a valid refresh token.
-// @Tags         Users
+// @Tags         Auth
 // @Accept       json
 // @Produce      json
 // @Param        Authorization  header    string  true  "Bearer <token>"
 // @Success      200      {object}  response.SuccessResponse{data=auth_dto.RefreshTokenResponse}
 // @Failure      400      {object}  response.BadRequestResponse
 // @Failure      500      {object}  response.ErrorResponse
-// @Router       /user/refresh-token [put]
+// @Router       /auth/refresh-token [put]
 func (api *RefreshTokenHandler) RefreshToken(ctx *gin.Context) {
 	token := ctx.Request.Header.Get("Authorization")
 	codeInternalError := appErrors.ErrCodeInternalServerError

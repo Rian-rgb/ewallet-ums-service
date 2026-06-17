@@ -1,8 +1,7 @@
-package cmd
+package grpc
 
 import (
 	"ewallet-ums/infra"
-	"ewallet-ums/internal/server"
 	"github.com/Rian-rgb/ewallet-common-lib/config"
 	"github.com/Rian-rgb/ewallet-common-lib/logger"
 	pb "github.com/Rian-rgb/ewallet-proto/gen/token_validation/v1"
@@ -15,7 +14,7 @@ func NewGRPCServer(dependency *infra.Dependency) *grpc.Server {
 
 	pb.RegisterTokenValidationServiceServer(
 		grpcServer,
-		&server.TokenValidationServer{
+		&TokenValidationServer{
 			Handler: dependency.TokenValidateAPI,
 		},
 	)

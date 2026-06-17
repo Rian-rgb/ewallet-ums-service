@@ -18,14 +18,14 @@ type LoginHandler struct {
 // Login godoc
 // @Summary      Login user
 // @Description  Authenticates user credentials (username and password).
-// @Tags         Users
+// @Tags         Auth
 // @Accept       json
 // @Produce      json
 // @Param        request  body      auth_dto.LoginRequest  true  "Payload login"
 // @Success      200      {object}  response.SuccessResponse{data=auth_dto.LoginResponse}
 // @Failure      400      {object}  response.BadRequestResponse
 // @Failure      500      {object}  response.ErrorResponse
-// @Router       /user/login [post]
+// @Router       /auth/login [post]
 func (api *LoginHandler) Login(ctx *gin.Context) {
 	var (
 		req            auth_dto.LoginRequest

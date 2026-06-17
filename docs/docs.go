@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/user/login": {
+        "/auth/login": {
             "post": {
                 "description": "Authenticates user credentials (username and password).",
                 "consumes": [
@@ -25,7 +25,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Users"
+                    "Auth"
                 ],
                 "summary": "Login user",
                 "parameters": [
@@ -35,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/auth_dto.LoginRequest"
+                            "$ref": "#/definitions/ewallet-ums_internal_model_auth_dto.LoginRequest"
                         }
                     }
                 ],
@@ -51,7 +51,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/auth_dto.LoginResponse"
+                                            "$ref": "#/definitions/ewallet-ums_internal_model_auth_dto.LoginResponse"
                                         }
                                     }
                                 }
@@ -73,7 +73,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/logout": {
+        "/auth/logout": {
             "delete": {
                 "description": "Logs out the authenticated user and invalidates the refresh token",
                 "consumes": [
@@ -83,7 +83,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Users"
+                    "Auth"
                 ],
                 "summary": "Logout user",
                 "parameters": [
@@ -117,7 +117,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/refresh-token": {
+        "/auth/refresh-token": {
             "put": {
                 "description": "Generates a new access token using a valid refresh token.",
                 "consumes": [
@@ -127,7 +127,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Users"
+                    "Auth"
                 ],
                 "summary": "Refresh token  user",
                 "parameters": [
@@ -151,7 +151,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/auth_dto.RefreshTokenResponse"
+                                            "$ref": "#/definitions/ewallet-ums_internal_model_auth_dto.RefreshTokenResponse"
                                         }
                                     }
                                 }
@@ -173,7 +173,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/register": {
+        "/auth/register": {
             "post": {
                 "description": "Creates a new user account and securely stores the hashed password.",
                 "consumes": [
@@ -183,7 +183,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Users"
+                    "Auth"
                 ],
                 "summary": "Register a new user",
                 "parameters": [
@@ -193,7 +193,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/auth_dto.RegisterRequest"
+                            "$ref": "#/definitions/ewallet-ums_internal_model_auth_dto.RegisterRequest"
                         }
                     }
                 ],
@@ -209,7 +209,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/auth_dto.RegisterResponse"
+                                            "$ref": "#/definitions/ewallet-ums_internal_model_auth_dto.RegisterResponse"
                                         }
                                     }
                                 }
@@ -233,7 +233,38 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "auth_dto.LoginRequest": {
+        "errors.Code": {
+            "type": "string",
+            "enum": [
+                "UNKNOWN_ERROR",
+                "INTERNAL_SERVER_ERROR",
+                "BAD_REQUEST",
+                "UNAUTHORIZED",
+                "FORBIDDEN",
+                "NOT_FOUND",
+                "USER_NOT_FOUND",
+                "SESSION_NOT_FOUND",
+                "INVALID_PASSWORD",
+                "INVALID_STATUS_TRANSITION",
+                "TRANSACTION_NOT_FOUND",
+                "INSUFFICIENT_BALANCE"
+            ],
+            "x-enum-varnames": [
+                "ErrCodeUnknownError",
+                "ErrCodeInternalServerError",
+                "ErrCodeBadRequest",
+                "ErrCodeUnauthorized",
+                "ErrCodeForbidden",
+                "ErrCodeNotFound",
+                "ErrCodeUserNotFound",
+                "ErrCodeSessionNotFound",
+                "ErrCodeInvalidPassword",
+                "ErrCodeInvalidStatusTransition",
+                "ErrCodeTransactionNotFound",
+                "ErrCodeInsufficientBalance"
+            ]
+        },
+        "ewallet-ums_internal_model_auth_dto.LoginRequest": {
             "type": "object",
             "required": [
                 "password",
@@ -248,7 +279,7 @@ const docTemplate = `{
                 }
             }
         },
-        "auth_dto.LoginResponse": {
+        "ewallet-ums_internal_model_auth_dto.LoginResponse": {
             "type": "object",
             "properties": {
                 "email": {
@@ -271,7 +302,7 @@ const docTemplate = `{
                 }
             }
         },
-        "auth_dto.RefreshTokenResponse": {
+        "ewallet-ums_internal_model_auth_dto.RefreshTokenResponse": {
             "type": "object",
             "properties": {
                 "token": {
@@ -279,7 +310,7 @@ const docTemplate = `{
                 }
             }
         },
-        "auth_dto.RegisterRequest": {
+        "ewallet-ums_internal_model_auth_dto.RegisterRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -318,7 +349,7 @@ const docTemplate = `{
                 }
             }
         },
-        "auth_dto.RegisterResponse": {
+        "ewallet-ums_internal_model_auth_dto.RegisterResponse": {
             "type": "object",
             "properties": {
                 "address": {
@@ -343,37 +374,6 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
-        },
-        "errors.Code": {
-            "type": "string",
-            "enum": [
-                "UNKNOWN_ERROR",
-                "INTERNAL_SERVER_ERROR",
-                "BAD_REQUEST",
-                "UNAUTHORIZED",
-                "FORBIDDEN",
-                "NOT_FOUND",
-                "USER_NOT_FOUND",
-                "SESSION_NOT_FOUND",
-                "INVALID_PASSWORD",
-                "INVALID_STATUS_TRANSITION",
-                "TRANSACTION_NOT_FOUND",
-                "INSUFFICIENT_BALANCE"
-            ],
-            "x-enum-varnames": [
-                "ErrCodeUnknownError",
-                "ErrCodeInternalServerError",
-                "ErrCodeBadRequest",
-                "ErrCodeUnauthorized",
-                "ErrCodeForbidden",
-                "ErrCodeNotFound",
-                "ErrCodeUserNotFound",
-                "ErrCodeSessionNotFound",
-                "ErrCodeInvalidPassword",
-                "ErrCodeInvalidStatusTransition",
-                "ErrCodeTransactionNotFound",
-                "ErrCodeInsufficientBalance"
-            ]
         },
         "response.BadRequestResponse": {
             "type": "object",
@@ -429,12 +429,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
+	Version:          "0.0",
 	Host:             "localhost:8080",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
 	Title:            "E Wallet API (User Management Service)",
-	Description:      "Dokumentasi API Brilian.",
+	Description:      "API Service for managing user accounts, authentication, and authorization.\nFeatures include: user registration, login, logout, token refresh, and token validation.\n<br/><b>Developer:</b> Muhammad Brilian Satria Utama\n<b>Environment:</b> Development",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

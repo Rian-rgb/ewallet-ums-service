@@ -15,14 +15,14 @@ type LogoutHandler struct {
 // Logout godoc
 // @Summary      Logout user
 // @Description  Logs out the authenticated user and invalidates the refresh token
-// @Tags         Users
+// @Tags         Auth
 // @Accept       json
 // @Produce      json
 // @Param        Authorization  header    string  true  "Bearer <token>"
 // @Success      200      {object}  response.SuccessResponse
 // @Failure      400      {object}  response.BadRequestResponse
 // @Failure      500      {object}  response.ErrorResponse
-// @Router       /user/logout [delete]
+// @Router       /auth/logout [delete]
 func (api *LogoutHandler) Logout(ctx *gin.Context) {
 	token := ctx.Request.Header.Get("Authorization")
 	err := api.LogoutService.Logout(ctx, token)

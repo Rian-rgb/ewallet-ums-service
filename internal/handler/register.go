@@ -18,14 +18,14 @@ type RegisterHandler struct {
 // Register godoc
 // @Summary      Register a new user
 // @Description  Creates a new user account and securely stores the hashed password.
-// @Tags         Users
+// @Tags         Auth
 // @Accept       json
 // @Produce      json
 // @Param        request  body      auth_dto.RegisterRequest  true  "Register payload"
 // @Success      200      {object}  response.SuccessResponse{data=auth_dto.RegisterResponse}
 // @Failure      400      {object}  response.BadRequestResponse
 // @Failure      500      {object}  response.ErrorResponse
-// @Router       /user/register [post]
+// @Router       /auth/register [post]
 func (api *RegisterHandler) Register(ctx *gin.Context) {
 	var (
 		req            auth_dto.RegisterRequest

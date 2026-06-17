@@ -1,8 +1,9 @@
 package main
 
 import (
-	"ewallet-ums/cmd"
 	"ewallet-ums/infra"
+	"ewallet-ums/internal/grpc"
+	"ewallet-ums/internal/http"
 )
 
 //TIP <p>To run your code, right-click the code and select <b>Run</b>.</p> <p>Alternatively, click
@@ -35,8 +36,8 @@ func main() {
 	dependencies := infra.DependencyInject(appDeps)
 
 	// run grpc
-	go cmd.ServeGRPC(dependencies)
+	go grpc.ServeGRPC(dependencies)
 
 	// run http
-	cmd.ServeHTTP(dependencies, appDeps)
+	http.Serve(dependencies, appDeps)
 }

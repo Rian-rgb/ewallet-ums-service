@@ -1,81 +1,5 @@
 basePath: /api/v1
 definitions:
-  auth_dto.LoginRequest:
-    properties:
-      password:
-        type: string
-      username:
-        type: string
-    required:
-    - password
-    - username
-    type: object
-  auth_dto.LoginResponse:
-    properties:
-      email:
-        type: string
-      full_name:
-        type: string
-      refresh_token:
-        type: string
-      token:
-        type: string
-      user_id:
-        type: integer
-      username:
-        type: string
-    type: object
-  auth_dto.RefreshTokenResponse:
-    properties:
-      token:
-        type: string
-    type: object
-  auth_dto.RegisterRequest:
-    properties:
-      address:
-        type: string
-      dob:
-        type: string
-      email:
-        maxLength: 100
-        type: string
-      full_name:
-        maxLength: 100
-        type: string
-      password:
-        maxLength: 255
-        minLength: 8
-        type: string
-      phone_number:
-        maxLength: 15
-        type: string
-      username:
-        maxLength: 20
-        type: string
-    required:
-    - email
-    - full_name
-    - password
-    - phone_number
-    - username
-    type: object
-  auth_dto.RegisterResponse:
-    properties:
-      address:
-        type: string
-      dob:
-        type: string
-      email:
-        type: string
-      full_name:
-        type: string
-      id:
-        type: integer
-      phone_number:
-        type: string
-      username:
-        type: string
-    type: object
   errors.Code:
     enum:
     - UNKNOWN_ERROR
@@ -104,6 +28,82 @@ definitions:
     - ErrCodeInvalidStatusTransition
     - ErrCodeTransactionNotFound
     - ErrCodeInsufficientBalance
+  ewallet-ums_internal_model_auth_dto.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  ewallet-ums_internal_model_auth_dto.LoginResponse:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      refresh_token:
+        type: string
+      token:
+        type: string
+      user_id:
+        type: integer
+      username:
+        type: string
+    type: object
+  ewallet-ums_internal_model_auth_dto.RefreshTokenResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  ewallet-ums_internal_model_auth_dto.RegisterRequest:
+    properties:
+      address:
+        type: string
+      dob:
+        type: string
+      email:
+        maxLength: 100
+        type: string
+      full_name:
+        maxLength: 100
+        type: string
+      password:
+        maxLength: 255
+        minLength: 8
+        type: string
+      phone_number:
+        maxLength: 15
+        type: string
+      username:
+        maxLength: 20
+        type: string
+    required:
+    - email
+    - full_name
+    - password
+    - phone_number
+    - username
+    type: object
+  ewallet-ums_internal_model_auth_dto.RegisterResponse:
+    properties:
+      address:
+        type: string
+      dob:
+        type: string
+      email:
+        type: string
+      full_name:
+        type: string
+      id:
+        type: integer
+      phone_number:
+        type: string
+      username:
+        type: string
+    type: object
   response.BadRequestResponse:
     properties:
       error_code:
@@ -139,11 +139,15 @@ definitions:
 host: localhost:8080
 info:
   contact: {}
-  description: Dokumentasi API Brilian.
+  description: |-
+    API Service for managing user accounts, authentication, and authorization.
+    Features include: user registration, login, logout, token refresh, and token validation.
+    <br/><b>Developer:</b> Muhammad Brilian Satria Utama
+    <b>Environment:</b> Development
   title: E Wallet API (User Management Service)
-  version: "1.0"
+  version: "0.0"
 paths:
-  /user/login:
+  /auth/login:
     post:
       consumes:
       - application/json
@@ -154,7 +158,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/auth_dto.LoginRequest'
+          $ref: '#/definitions/ewallet-ums_internal_model_auth_dto.LoginRequest'
       produces:
       - application/json
       responses:
@@ -165,7 +169,7 @@ paths:
             - $ref: '#/definitions/response.SuccessResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/auth_dto.LoginResponse'
+                  $ref: '#/definitions/ewallet-ums_internal_model_auth_dto.LoginResponse'
               type: object
         "400":
           description: Bad Request
@@ -177,8 +181,8 @@ paths:
             $ref: '#/definitions/response.ErrorResponse'
       summary: Login user
       tags:
-      - Users
-  /user/logout:
+      - Auth
+  /auth/logout:
     delete:
       consumes:
       - application/json
@@ -206,8 +210,8 @@ paths:
             $ref: '#/definitions/response.ErrorResponse'
       summary: Logout user
       tags:
-      - Users
-  /user/refresh-token:
+      - Auth
+  /auth/refresh-token:
     put:
       consumes:
       - application/json
@@ -228,7 +232,7 @@ paths:
             - $ref: '#/definitions/response.SuccessResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/auth_dto.RefreshTokenResponse'
+                  $ref: '#/definitions/ewallet-ums_internal_model_auth_dto.RefreshTokenResponse'
               type: object
         "400":
           description: Bad Request
@@ -240,8 +244,8 @@ paths:
             $ref: '#/definitions/response.ErrorResponse'
       summary: Refresh token  user
       tags:
-      - Users
-  /user/register:
+      - Auth
+  /auth/register:
     post:
       consumes:
       - application/json
@@ -252,7 +256,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/auth_dto.RegisterRequest'
+          $ref: '#/definitions/ewallet-ums_internal_model_auth_dto.RegisterRequest'
       produces:
       - application/json
       responses:
@@ -263,7 +267,7 @@ paths:
             - $ref: '#/definitions/response.SuccessResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/auth_dto.RegisterResponse'
+                  $ref: '#/definitions/ewallet-ums_internal_model_auth_dto.RegisterResponse'
               type: object
         "400":
           description: Bad Request
@@ -275,5 +279,5 @@ paths:
             $ref: '#/definitions/response.ErrorResponse'
       summary: Register a new user
       tags:
-      - Users
+      - Auth
 swagger: "2.0"
