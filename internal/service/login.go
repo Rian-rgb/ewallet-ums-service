@@ -23,13 +23,13 @@ func (svc *LoginService) Login(
 	username string,
 	password string,
 ) (
-	respUserEntity *user.Entity,
-	respToken string,
-	respRefreshToken string,
+	userEntity *user.Entity,
+	token string,
+	refreshToken string,
 	err error,
 ) {
 
-	userEntity, err := svc.UserRepo.FindByUsername(username)
+	userEntity, err = svc.UserRepo.FindByUsername(username)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, "", "", internalErrors.ErrUserNotFound
@@ -44,7 +44,7 @@ func (svc *LoginService) Login(
 		return nil, "", "", internalErrors.ErrInvalidPassword
 	}
 
-	token, err := svc.JwtManager.GenerateToken(
+	token, err = svc.JwtManager.GenerateToken(
 		userEntity.ID,
 		userEntity.Username,
 		userEntity.FullName,
@@ -57,7 +57,7 @@ func (svc *LoginService) Login(
 		return nil, "", "", internalErrors.ErrInternalServerError
 	}
 
-	refreshToken, err := svc.JwtManager.GenerateToken(
+	refreshToken, err = svc.JwtManager.GenerateToken(
 		userEntity.ID,
 		userEntity.Username,
 		userEntity.FullName,
@@ -86,7 +86,5 @@ func (svc *LoginService) Login(
 		return nil, "", "", internalErrors.ErrInternalServerError
 	}
 
-	resp := userEntity
-
-	return resp, token, refreshToken, nil
+	return userEntity, token, refreshToken, nil
 }

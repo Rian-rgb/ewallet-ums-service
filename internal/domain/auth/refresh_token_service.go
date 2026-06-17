@@ -6,5 +6,5 @@ import (
 )
 
 type IRefreshTokenService interface {
-	RefreshToken(ctx context.Context, refreshToken string, tokenClaim security.ClaimToken) (string, error)
+	RefreshToken(ctx context.Context, refreshToken string, tokenClaim security.ClaimToken) (token string, err error)
 }

@@ -11,9 +11,9 @@ type ILoginService interface {
 		username string,
 		password string,
 	) (
-		respUserEntity *user.Entity,
-		respToken string,
-		respRefreshToken string,
+		userEntity *user.Entity,
+		token string,
+		refreshToken string,
 		err error,
 	)
 }

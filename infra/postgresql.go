@@ -21,12 +21,12 @@ func InitPostgresql() *gorm.DB {
 
 	dbClient, err := database.NewPostgresClient(dbCfg)
 	if err != nil {
-		logger.Error("The App shutdown because failed connect DB: ", err)
+		logger.Error("the App shutdown because failed connect DB: ", err)
 	}
 
 	err = dbClient.AutoMigrate(&user.Entity{})
 	if err != nil {
-		logger.Error("Failed doing auto migrate to internal tabel: ", err)
+		logger.Error("failed doing auto migrate to internal tabel: ", err)
 	}
 
 	return dbClient

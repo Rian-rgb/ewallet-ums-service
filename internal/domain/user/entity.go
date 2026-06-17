@@ -12,7 +12,7 @@ type Entity struct {
 	Password    string `gorm:"column:password;type:varchar(255)"`
 	Address     string `gorm:"column:address;type:text"`
 	Dob         string `gorm:"column:dob;type:date"`
-	FullName    string `gorm:"column:full_name;type:varchar(100)" validate:"required"`
+	FullName    string `gorm:"column:full_name;type:varchar(100)"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
