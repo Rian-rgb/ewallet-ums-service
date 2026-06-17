@@ -2,8 +2,8 @@ package handler
 
 import (
 	"ewallet-ums/internal/domain/auth"
+	"ewallet-ums/internal/dto/auth_dto"
 	"ewallet-ums/internal/errors"
-	"ewallet-ums/internal/model/auth_dto"
 	appErrors "github.com/Rian-rgb/ewallet-common-lib/errors"
 	"github.com/Rian-rgb/ewallet-common-lib/logger"
 	"github.com/Rian-rgb/ewallet-common-lib/response"
