@@ -26,7 +26,7 @@ func DependencyInject(appDeps *AppDependencies) *Dependency {
 		DB: appDeps.PostgresDB,
 	}
 
-	registerService := &service.RegisterService{
+	registerSvc := &service.RegisterService{
 		UserRepo:       userRepo,
 		ExternalWallet: extWallet,
 	}
@@ -54,7 +54,7 @@ func DependencyInject(appDeps *AppDependencies) *Dependency {
 	}
 
 	registerAPI := &handler.RegisterHandler{
-		RegisterService: registerService,
+		RegisterService: registerSvc,
 	}
 	loginAPI := &handler.LoginHandler{
 		LoginService: loginSvc,
