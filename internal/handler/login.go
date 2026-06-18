@@ -29,7 +29,6 @@ type LoginHandler struct {
 func (api *LoginHandler) Login(ctx *gin.Context) {
 	var (
 		req            auth_dto.LoginRequest
-		resp           auth_dto.LoginResponse
 		codeBadRequest = appErrors.ErrCodeBadRequest
 	)
 
@@ -52,7 +51,7 @@ func (api *LoginHandler) Login(ctx *gin.Context) {
 		return
 	}
 
-	resp = auth_dto.LoginResponse{
+	resp := auth_dto.LoginResponse{
 		UserID:       result.ID,
 		Username:     result.Username,
 		FullName:     result.FullName,

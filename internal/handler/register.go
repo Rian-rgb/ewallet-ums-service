@@ -29,7 +29,6 @@ type RegisterHandler struct {
 func (api *RegisterHandler) Register(ctx *gin.Context) {
 	var (
 		req            auth_dto.RegisterRequest
-		resp           auth_dto.RegisterResponse
 		codeBadRequest = appErrors.ErrCodeBadRequest
 	)
 
@@ -53,7 +52,7 @@ func (api *RegisterHandler) Register(ctx *gin.Context) {
 		return
 	}
 
-	resp = auth_dto.RegisterResponse{
+	resp := auth_dto.RegisterResponse{
 		ID:          result.ID,
 		Username:    result.Username,
 		Email:       result.Email,
