@@ -12,7 +12,6 @@ type LogoutHandler struct {
 	LogoutSvc auth.ILogoutService
 }
 
-// Logout godoc
 // @Summary      Logout user
 // @Description  Logs out the authenticated user and invalidates the refresh token
 // @Tags         Auth

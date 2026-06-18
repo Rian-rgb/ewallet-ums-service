@@ -16,8 +16,7 @@ type RefreshTokenHandler struct {
 	RefreshTokenSvc auth.IRefreshTokenService
 }
 
-// Refresh godoc
-// @Summary     Refresh token  user
+// @Summary     Refresh token user
 // @Description Generates a new access token using a valid refresh token.
 // @Tags         Auth
 // @Accept       json

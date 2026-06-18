@@ -15,7 +15,6 @@ type LoginHandler struct {
 	LoginSvc auth.ILoginService
 }
 
-// Login godoc
 // @Summary      Login user
 // @Description  Authenticates user credentials (username and password).
 // @Tags         Auth

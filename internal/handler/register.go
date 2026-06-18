@@ -15,7 +15,6 @@ type RegisterHandler struct {
 	RegisterSvc auth.IRegisterService
 }
 
-// Register godoc
 // @Summary      Register a new user
 // @Description  Creates a new user account and securely stores the hashed password.
 // @Tags         Auth
