@@ -23,7 +23,7 @@ func (req RegisterRequest) Validate() []response.ValidationErrorField {
 	return response.MapValidationErrors(err)
 }
 
-func (req *RegisterRequest) ToModel() *user.Entity {
+func (req *RegisterRequest) ToEntity() *user.Entity {
 	return &user.Entity{
 		Username:    req.Username,
 		Email:       req.Email,

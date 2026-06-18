@@ -13,13 +13,7 @@ func (repo *UserRepository) Save(user *user.Entity) error {
 	return repo.DB.Create(&user).Error
 }
 
-func (repo *UserRepository) FindByUsername(username string) (*user.Entity, error) {
-	var (
-		entity user.Entity
-		err    error
-	)
-
-	err = repo.DB.Where("username = ?", username).First(&entity).Error
-
-	return &entity, err
+func (repo *UserRepository) FindByUsername(username string) (userEntity *user.Entity, err error) {
+	err = repo.DB.Where("username = ?", username).First(&userEntity).Error
+	return userEntity, err
 }

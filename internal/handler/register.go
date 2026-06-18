@@ -46,7 +46,7 @@ func (api *RegisterHandler) Register(ctx *gin.Context) {
 		return
 	}
 
-	userEntity := req.ToModel()
+	userEntity := req.ToEntity()
 	result, err := api.RegisterService.Register(ctx, userEntity)
 	if err != nil {
 		errors.HandleServiceError(ctx, err)
