@@ -9,7 +9,7 @@ import (
 )
 
 type LogoutHandler struct {
-	LogoutService auth.ILogoutService
+	LogoutSvc auth.ILogoutService
 }
 
 // Logout godoc
@@ -25,7 +25,7 @@ type LogoutHandler struct {
 // @Router       /auth/logout [delete]
 func (api *LogoutHandler) Logout(ctx *gin.Context) {
 	token := ctx.Request.Header.Get("Authorization")
-	err := api.LogoutService.Logout(ctx, token)
+	err := api.LogoutSvc.Logout(ctx, token)
 	if err != nil {
 		errors.HandleServiceError(ctx, err)
 		return

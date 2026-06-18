@@ -54,16 +54,16 @@ func DependencyInject(appDeps *AppDependencies) *Dependency {
 	}
 
 	registerAPI := &handler.RegisterHandler{
-		RegisterService: registerSvc,
+		RegisterSvc: registerSvc,
 	}
 	loginAPI := &handler.LoginHandler{
-		LoginService: loginSvc,
+		LoginSvc: loginSvc,
 	}
 	logoutAPI := &handler.LogoutHandler{
-		LogoutService: logoutSvc,
+		LogoutSvc: logoutSvc,
 	}
 	refreshTokenAPI := &handler.RefreshTokenHandler{
-		RefreshTokenService: refreshSvc,
+		RefreshTokenSvc: refreshSvc,
 	}
 	tokenValidateAPI := &handler.TokenValidationHandler{
 		TokenValidationService: tokenValidateSvc,

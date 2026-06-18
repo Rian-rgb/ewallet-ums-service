@@ -12,7 +12,7 @@ import (
 )
 
 type RegisterHandler struct {
-	RegisterService auth.IRegisterService
+	RegisterSvc auth.IRegisterService
 }
 
 // Register godoc
@@ -47,7 +47,7 @@ func (api *RegisterHandler) Register(ctx *gin.Context) {
 	}
 
 	userEntity := req.ToEntity()
-	result, err := api.RegisterService.Register(ctx, userEntity)
+	result, err := api.RegisterSvc.Register(ctx, userEntity)
 	if err != nil {
 		errors.HandleServiceError(ctx, err)
 		return

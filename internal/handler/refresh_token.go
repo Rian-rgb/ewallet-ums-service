@@ -13,7 +13,7 @@ import (
 )
 
 type RefreshTokenHandler struct {
-	RefreshTokenService auth.IRefreshTokenService
+	RefreshTokenSvc auth.IRefreshTokenService
 }
 
 // Refresh godoc
@@ -55,7 +55,7 @@ func (api *RefreshTokenHandler) RefreshToken(ctx *gin.Context) {
 		return
 	}
 
-	result, err := api.RefreshTokenService.RefreshToken(ctx.Request.Context(), token, *tokenClaim)
+	result, err := api.RefreshTokenSvc.RefreshToken(ctx.Request.Context(), token, *tokenClaim)
 	if err != nil {
 		errors.HandleServiceError(ctx, err)
 		return

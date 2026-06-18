@@ -12,7 +12,7 @@ import (
 )
 
 type LoginHandler struct {
-	LoginService auth.ILoginService
+	LoginSvc auth.ILoginService
 }
 
 // Login godoc
@@ -46,7 +46,7 @@ func (api *LoginHandler) Login(ctx *gin.Context) {
 		return
 	}
 
-	result, token, refreshToken, err := api.LoginService.Login(ctx, req.Username, req.Password)
+	result, token, refreshToken, err := api.LoginSvc.Login(ctx, req.Username, req.Password)
 	if err != nil {
 		errors.HandleServiceError(ctx, err)
 		return
