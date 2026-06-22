@@ -20,7 +20,8 @@ func HandleServiceError(ctx *gin.Context, err error) {
 	switch {
 	case errors.Is(err, ErrUserNotFound),
 		errors.Is(err, ErrInvalidPassword),
-		errors.Is(err, ErrInvalidToken):
+		errors.Is(err, ErrInvalidToken),
+		errors.Is(err, ErrTokenExpired):
 
 		response.SendError(ctx, errCodeUnauthorized.ToHTTPStatus(), errCodeUnauthorized, err.Error())
 

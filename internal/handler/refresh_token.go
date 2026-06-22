@@ -30,9 +30,9 @@ func (api *RefreshTokenHandler) RefreshToken(ctx *gin.Context) {
 	token := ctx.Request.Header.Get("Authorization")
 	codeInternalError := appErrors.ErrCodeInternalServerError
 
-	claim, ok := ctx.Get("token")
+	userData, ok := security.GetGinToken(ctx)
 	if !ok {
-		logger.WithContext(ctx).Error("token claim not found in context")
+		logger.WithContext(ctx).Error("token userData not found in context")
 		response.SendError(
 			ctx,
 			codeInternalError.ToHTTPStatus(),
@@ -42,19 +42,7 @@ func (api *RefreshTokenHandler) RefreshToken(ctx *gin.Context) {
 		return
 	}
 
-	tokenClaim, ok := claim.(*security.ClaimToken)
-	if !ok {
-		logger.WithContext(ctx).Error("failed to parse token claim")
-		response.SendError(
-			ctx,
-			codeInternalError.ToHTTPStatus(),
-			codeInternalError,
-			response.InternalServerErrorMessage,
-		)
-		return
-	}
-
-	result, err := api.RefreshTokenSvc.RefreshToken(ctx.Request.Context(), token, *tokenClaim)
+	result, err := api.RefreshTokenSvc.RefreshToken(ctx, token, userData)
 	if err != nil {
 		errors.HandleServiceError(ctx, err)
 		return

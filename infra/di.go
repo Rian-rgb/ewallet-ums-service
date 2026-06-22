@@ -10,7 +10,7 @@ import (
 )
 
 type Dependency struct {
-	UserRepository   user.IRepository
+	UserRepo         user.IRepository
 	RegisterAPI      auth.IRegisterHandler
 	LoginAPI         auth.ILoginHandler
 	LogoutAPI        auth.ILogoutHandler
@@ -51,6 +51,7 @@ func DependencyInject(appDeps *AppDependencies) *Dependency {
 	tokenValidateSvc := &service.TokenValidationService{
 		UserRepo:   userRepo,
 		JwtManager: appDeps.JWTManager,
+		RedisRepo:  appDeps.RedisRepo,
 	}
 
 	registerAPI := &handler.RegisterHandler{
@@ -70,7 +71,7 @@ func DependencyInject(appDeps *AppDependencies) *Dependency {
 	}
 
 	return &Dependency{
-		UserRepository:   userRepo,
+		UserRepo:         userRepo,
 		RegisterAPI:      registerAPI,
 		LoginAPI:         loginAPI,
 		LogoutAPI:        logoutAPI,

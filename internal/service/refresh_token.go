@@ -15,7 +15,7 @@ type RefrshTokenService struct {
 	RedisRepo  *redis.RedisRepository
 }
 
-func (svc *RefrshTokenService) RefreshToken(ctx context.Context, refreshToken string, tokenClaim security.ClaimToken) (token string, err error) {
+func (svc *RefrshTokenService) RefreshToken(ctx context.Context, refreshToken string, tokenClaim security.Token) (token string, err error) {
 
 	token, err = svc.JwtManager.GenerateToken(
 		tokenClaim.UserID,

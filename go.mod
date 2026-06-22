@@ -3,7 +3,7 @@ module ewallet-ums
 go 1.25.7
 
 require (
-	github.com/Rian-rgb/ewallet-common-lib v0.0.0-20260616145517-fbab122a420c
+	github.com/Rian-rgb/ewallet-common-lib v0.0.0-20260622020217-ccd1a1fd93de
 	github.com/Rian-rgb/ewallet-proto v0.1.1
 	github.com/gin-gonic/gin v1.12.0
 	github.com/go-playground/validator/v10 v10.30.2

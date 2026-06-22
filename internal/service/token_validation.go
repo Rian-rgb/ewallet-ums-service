@@ -7,12 +7,13 @@ import (
 	"github.com/Rian-rgb/ewallet-common-lib/logger"
 	"github.com/Rian-rgb/ewallet-common-lib/redis"
 	"github.com/Rian-rgb/ewallet-common-lib/security"
+	"time"
 )
 
 type TokenValidationService struct {
 	UserRepo   user.IRepository
 	JwtManager *security.JWTManager
-	RedisRepo  redis.RedisRepository
+	RedisRepo  *redis.RedisRepository
 }
 
 func (svc *TokenValidationService) TokenValidation(ctx context.Context, token string) (*security.ClaimToken, error) {
@@ -26,6 +27,12 @@ func (svc *TokenValidationService) TokenValidation(ctx context.Context, token st
 
 		logger.WithContext(ctx).Error("failed to validate token: ", err)
 		return nil, internalErrors.ErrInvalidToken
+	}
+
+	expTime, err := claimToken.GetExpirationTime()
+	if err != nil || time.Now().After(expTime.Time) {
+		logger.WithContext(ctx).Error("token has expired, expired at: ", claimToken.ExpiresAt)
+		return nil, internalErrors.ErrTokenExpired
 	}
 
 	userTokenKey := redis.UserTokenPrefix + token
