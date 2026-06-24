@@ -4,6 +4,7 @@ import (
 	"context"
 	"ewallet-ums/internal/domain/user"
 	internalErrors "ewallet-ums/internal/errors"
+	"fmt"
 	"github.com/Rian-rgb/ewallet-common-lib/logger"
 	"github.com/Rian-rgb/ewallet-common-lib/redis"
 	"github.com/Rian-rgb/ewallet-common-lib/security"
@@ -33,6 +34,7 @@ func (svc *RefrshTokenService) RefreshToken(ctx context.Context, refreshToken st
 	refreshTokenKey := redis.RefreshTokenPrefix + refreshToken
 	userTokenKey := redis.UserTokenPrefix + token
 	err = svc.RedisRepo.Set(ctx, userTokenKey, refreshTokenKey, redis.UserTokenDuration)
+	fmt.Println("test")
 	if err != nil {
 
 		logger.WithContext(ctx).Error("failed to add user token in redis: ", err)
