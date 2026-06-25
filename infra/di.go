@@ -11,11 +11,11 @@ import (
 
 type Dependency struct {
 	UserRepo         user.IRepository
-	RegisterAPI      auth.IRegisterHandler
-	LoginAPI         auth.ILoginHandler
-	LogoutAPI        auth.ILogoutHandler
-	RefreshTokenAPI  auth.IRefreshTokenHandler
-	TokenValidateAPI auth.ITokenValidationHandler
+	RegisterHdl      auth.IRegisterHandler
+	LoginHdl         auth.ILoginHandler
+	LogoutHdl        auth.ILogoutHandler
+	RefreshTokenHdl  auth.IRefreshTokenHandler
+	TokenValidateHdl auth.ITokenValidationHandler
 }
 
 func DependencyInject(appDeps *AppDependencies) *Dependency {
@@ -54,28 +54,28 @@ func DependencyInject(appDeps *AppDependencies) *Dependency {
 		RedisRepo:  appDeps.RedisRepo,
 	}
 
-	registerAPI := &handler.RegisterHandler{
+	registerHdl := &handler.RegisterHandler{
 		RegisterSvc: registerSvc,
 	}
-	loginAPI := &handler.LoginHandler{
+	loginHdl := &handler.LoginHandler{
 		LoginSvc: loginSvc,
 	}
-	logoutAPI := &handler.LogoutHandler{
+	logoutHdl := &handler.LogoutHandler{
 		LogoutSvc: logoutSvc,
 	}
-	refreshTokenAPI := &handler.RefreshTokenHandler{
+	refreshTokenHdl := &handler.RefreshTokenHandler{
 		RefreshTokenSvc: refreshSvc,
 	}
-	tokenValidateAPI := &handler.TokenValidationHandler{
+	tokenValidateHdl := &handler.TokenValidationHandler{
 		TokenValidationService: tokenValidateSvc,
 	}
 
 	return &Dependency{
 		UserRepo:         userRepo,
-		RegisterAPI:      registerAPI,
-		LoginAPI:         loginAPI,
-		LogoutAPI:        logoutAPI,
-		RefreshTokenAPI:  refreshTokenAPI,
-		TokenValidateAPI: tokenValidateAPI,
+		RegisterHdl:      registerHdl,
+		LoginHdl:         loginHdl,
+		LogoutHdl:        logoutHdl,
+		RefreshTokenHdl:  refreshTokenHdl,
+		TokenValidateHdl: tokenValidateHdl,
 	}
 }

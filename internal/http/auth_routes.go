@@ -16,7 +16,7 @@ func registerAuthRoutes(
 
 	auth.POST(
 		"/login",
-		dependency.LoginAPI.Login,
+		dependency.LoginHdl.Login,
 	)
 
 	auth.PUT(
@@ -25,7 +25,7 @@ func registerAuthRoutes(
 			appDeps.JWTManager.ValidateToken,
 			*appDeps.RedisRepo,
 		),
-		dependency.RefreshTokenAPI.RefreshToken,
+		dependency.RefreshTokenHdl.RefreshToken,
 	)
 
 	auth.DELETE(
@@ -34,11 +34,11 @@ func registerAuthRoutes(
 			appDeps.JWTManager.ValidateToken,
 			*appDeps.RedisRepo,
 		),
-		dependency.LogoutAPI.Logout,
+		dependency.LogoutHdl.Logout,
 	)
 
 	auth.POST(
 		"/register",
-		dependency.RegisterAPI.Register,
+		dependency.RegisterHdl.Register,
 	)
 }

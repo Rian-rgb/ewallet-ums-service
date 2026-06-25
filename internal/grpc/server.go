@@ -15,7 +15,7 @@ func NewGRPCServer(dependency *infra.Dependency) *grpc.Server {
 	pb.RegisterTokenValidationServiceServer(
 		grpcServer,
 		&TokenValidationServer{
-			Handler: dependency.TokenValidateAPI,
+			Handler: dependency.TokenValidateHdl,
 		},
 	)
 

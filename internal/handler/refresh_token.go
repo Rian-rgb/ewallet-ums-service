@@ -26,7 +26,7 @@ type RefreshTokenHandler struct {
 // @Failure      400      {object}  response.BadRequestResponse
 // @Failure      500      {object}  response.ErrorResponse
 // @Router       /auth/refresh-token [put]
-func (api *RefreshTokenHandler) RefreshToken(ctx *gin.Context) {
+func (hdl *RefreshTokenHandler) RefreshToken(ctx *gin.Context) {
 	token := ctx.Request.Header.Get("Authorization")
 	codeInternalError := appErrors.ErrCodeInternalServerError
 
@@ -42,7 +42,7 @@ func (api *RefreshTokenHandler) RefreshToken(ctx *gin.Context) {
 		return
 	}
 
-	result, err := api.RefreshTokenSvc.RefreshToken(ctx, token, userData)
+	result, err := hdl.RefreshTokenSvc.RefreshToken(ctx, token, userData)
 	if err != nil {
 		errors.HandleServiceError(ctx, err)
 		return

@@ -25,7 +25,7 @@ type RegisterHandler struct {
 // @Failure      400      {object}  response.BadRequestResponse
 // @Failure      500      {object}  response.ErrorResponse
 // @Router       /auth/register [post]
-func (api *RegisterHandler) Register(ctx *gin.Context) {
+func (hdl *RegisterHandler) Register(ctx *gin.Context) {
 	var (
 		req            auth_dto.RegisterRequest
 		codeBadRequest = appErrors.ErrCodeBadRequest
@@ -45,7 +45,7 @@ func (api *RegisterHandler) Register(ctx *gin.Context) {
 	}
 
 	userEntity := req.ToEntity()
-	result, err := api.RegisterSvc.Register(ctx, userEntity)
+	result, err := hdl.RegisterSvc.Register(ctx, userEntity)
 	if err != nil {
 		errors.HandleServiceError(ctx, err)
 		return

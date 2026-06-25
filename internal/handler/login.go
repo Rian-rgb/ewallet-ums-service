@@ -25,7 +25,7 @@ type LoginHandler struct {
 // @Failure      400      {object}  response.BadRequestResponse
 // @Failure      500      {object}  response.ErrorResponse
 // @Router       /auth/login [post]
-func (api *LoginHandler) Login(ctx *gin.Context) {
+func (hdl *LoginHandler) Login(ctx *gin.Context) {
 	var (
 		req            auth_dto.LoginRequest
 		codeBadRequest = appErrors.ErrCodeBadRequest
@@ -44,7 +44,7 @@ func (api *LoginHandler) Login(ctx *gin.Context) {
 		return
 	}
 
-	result, token, refreshToken, err := api.LoginSvc.Login(ctx, req.Username, req.Password)
+	result, token, refreshToken, err := hdl.LoginSvc.Login(ctx, req.Username, req.Password)
 	if err != nil {
 		errors.HandleServiceError(ctx, err)
 		return

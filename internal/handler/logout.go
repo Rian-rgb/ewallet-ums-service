@@ -22,9 +22,9 @@ type LogoutHandler struct {
 // @Failure      400      {object}  response.BadRequestResponse
 // @Failure      500      {object}  response.ErrorResponse
 // @Router       /auth/logout [delete]
-func (api *LogoutHandler) Logout(ctx *gin.Context) {
+func (hdl *LogoutHandler) Logout(ctx *gin.Context) {
 	token := ctx.Request.Header.Get("Authorization")
-	err := api.LogoutSvc.Logout(ctx, token)
+	err := hdl.LogoutSvc.Logout(ctx, token)
 	if err != nil {
 		errors.HandleServiceError(ctx, err)
 		return
