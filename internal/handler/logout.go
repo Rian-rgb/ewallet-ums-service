@@ -12,16 +12,20 @@ type LogoutHandler struct {
 	LogoutSvc auth.ILogoutService
 }
 
-// @Summary      Logout user
-// @Description  Logs out the authenticated user and invalidates the refresh token
-// @Tags         Auth
-// @Accept       json
-// @Produce      json
-// @Param        Authorization  header    string  true  "Bearer <token>"
-// @Success      200      {object}  response.SuccessResponse
-// @Failure      400      {object}  response.BadRequestResponse
-// @Failure      500      {object}  response.ErrorResponse
-// @Router       /auth/logout [delete]
+// @Summary		Logout User
+// @Description	Logs out the authenticated user and invalidates the refresh token.
+// @Tags		Auth
+// @Accept		json
+// @Produce		json
+//
+// @Param		Authorization	header	string	true	"Bearer <token>"
+//
+// @Success		200	{object}	response.SuccessResponse	"Success"
+// @Failure		401	{object}	response.ErrorResponse		"Unauthorized"
+// @Failure		500	{object}	response.ErrorResponse		"Internal Server Error"
+//
+// @Security	BearerAuth
+// @Router		/auth/logout [delete]
 func (hdl *LogoutHandler) Logout(ctx *gin.Context) {
 	token := ctx.Request.Header.Get("Authorization")
 	err := hdl.LogoutSvc.Logout(ctx, token)

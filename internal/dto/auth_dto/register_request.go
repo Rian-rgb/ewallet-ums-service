@@ -11,7 +11,7 @@ type RegisterRequest struct {
 	Email       string `json:"email" validate:"required,email,max=100"`
 	PhoneNumber string `json:"phone_number" validate:"required,max=15"`
 	Address     string `json:"address"`
-	Dob         string `json:"dob"`
+	Dob         string `json:"dob" example:"1945-08-17"`
 	Password    string `json:"password" validate:"required,min=8,max=255"`
 	FullName    string `json:"full_name" validate:"required,max=100"`
 }

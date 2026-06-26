@@ -16,16 +16,20 @@ type RefreshTokenHandler struct {
 	RefreshTokenSvc auth.IRefreshTokenService
 }
 
-// @Summary     Refresh token user
-// @Description Generates a new access token using a valid refresh token.
-// @Tags         Auth
-// @Accept       json
-// @Produce      json
-// @Param        Authorization  header    string  true  "Bearer <token>"
-// @Success      200      {object}  response.SuccessResponse{data=auth_dto.RefreshTokenResponse}
-// @Failure      400      {object}  response.BadRequestResponse
-// @Failure      500      {object}  response.ErrorResponse
-// @Router       /auth/refresh-token [put]
+// @Summary		Refresh User's Token
+// @Description	Generates a new access token using a valid refresh token.
+// @Tags		Auth
+// @Accept		json
+// @Produce		json
+//
+// @Param		Authorization	header	string	true	"Bearer <token>"
+//
+// @Success		200	{object}	response.SuccessResponse{data=auth_dto.RefreshTokenResponse}	"Success"
+// @Failure		401	{object}	response.ErrorResponse											"Unauthorized"
+// @Failure		500	{object}	response.ErrorResponse											"Internal Server Error"
+//
+// @Security	BearerAuth
+// @Router		/auth/refresh-token [put]
 func (hdl *RefreshTokenHandler) RefreshToken(ctx *gin.Context) {
 	token := ctx.Request.Header.Get("Authorization")
 	codeInternalError := appErrors.ErrCodeInternalServerError

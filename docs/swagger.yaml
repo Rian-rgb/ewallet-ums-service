@@ -11,7 +11,9 @@ definitions:
     - USER_NOT_FOUND
     - SESSION_NOT_FOUND
     - INVALID_PASSWORD
+    - WALLET_NOT_FOUND
     - INVALID_STATUS_TRANSITION
+    - DUPLICATE_REFERENCE
     - TRANSACTION_NOT_FOUND
     - INSUFFICIENT_BALANCE
     type: string
@@ -25,10 +27,12 @@ definitions:
     - ErrCodeUserNotFound
     - ErrCodeSessionNotFound
     - ErrCodeInvalidPassword
+    - ErrCodeWalletNotFound
     - ErrCodeInvalidStatusTransition
+    - ErrCodeDuplicateReference
     - ErrCodeTransactionNotFound
     - ErrCodeInsufficientBalance
-  ewallet-ums_internal_model_auth_dto.LoginRequest:
+  ewallet-ums_internal_dto_auth_dto.LoginRequest:
     properties:
       password:
         type: string
@@ -38,7 +42,7 @@ definitions:
     - password
     - username
     type: object
-  ewallet-ums_internal_model_auth_dto.LoginResponse:
+  ewallet-ums_internal_dto_auth_dto.LoginResponse:
     properties:
       email:
         type: string
@@ -53,16 +57,17 @@ definitions:
       username:
         type: string
     type: object
-  ewallet-ums_internal_model_auth_dto.RefreshTokenResponse:
+  ewallet-ums_internal_dto_auth_dto.RefreshTokenResponse:
     properties:
       token:
         type: string
     type: object
-  ewallet-ums_internal_model_auth_dto.RegisterRequest:
+  ewallet-ums_internal_dto_auth_dto.RegisterRequest:
     properties:
       address:
         type: string
       dob:
+        example: "1945-08-17"
         type: string
       email:
         maxLength: 100
@@ -87,7 +92,7 @@ definitions:
     - phone_number
     - username
     type: object
-  ewallet-ums_internal_model_auth_dto.RegisterResponse:
+  ewallet-ums_internal_dto_auth_dto.RegisterResponse:
     properties:
       address:
         type: string
@@ -141,7 +146,6 @@ info:
   contact: {}
   description: |-
     API Service for managing user accounts, authentication, and authorization.
-    Features include: user registration, login, logout, token refresh, and token validation.
     <br/><b>Developer:</b> Muhammad Brilian Satria Utama
     <b>Environment:</b> Development
   title: E Wallet API (User Management Service)
@@ -153,23 +157,23 @@ paths:
       - application/json
       description: Authenticates user credentials (username and password).
       parameters:
-      - description: Payload login
+      - description: Payload login user
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/ewallet-ums_internal_model_auth_dto.LoginRequest'
+          $ref: '#/definitions/ewallet-ums_internal_dto_auth_dto.LoginRequest'
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: Success
           schema:
             allOf:
             - $ref: '#/definitions/response.SuccessResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/ewallet-ums_internal_model_auth_dto.LoginResponse'
+                  $ref: '#/definitions/ewallet-ums_internal_dto_auth_dto.LoginResponse'
               type: object
         "400":
           description: Bad Request
@@ -179,14 +183,14 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Login user
+      summary: Login User
       tags:
       - Auth
   /auth/logout:
     delete:
       consumes:
       - application/json
-      description: Logs out the authenticated user and invalidates the refresh token
+      description: Logs out the authenticated user and invalidates the refresh token.
       parameters:
       - description: Bearer <token>
         in: header
@@ -197,18 +201,20 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: Success
           schema:
             $ref: '#/definitions/response.SuccessResponse'
-        "400":
-          description: Bad Request
+        "401":
+          description: Unauthorized
           schema:
-            $ref: '#/definitions/response.BadRequestResponse'
+            $ref: '#/definitions/response.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Logout user
+      security:
+      - BearerAuth: []
+      summary: Logout User
       tags:
       - Auth
   /auth/refresh-token:
@@ -226,23 +232,25 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: Success
           schema:
             allOf:
             - $ref: '#/definitions/response.SuccessResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/ewallet-ums_internal_model_auth_dto.RefreshTokenResponse'
+                  $ref: '#/definitions/ewallet-ums_internal_dto_auth_dto.RefreshTokenResponse'
               type: object
-        "400":
-          description: Bad Request
+        "401":
+          description: Unauthorized
           schema:
-            $ref: '#/definitions/response.BadRequestResponse'
+            $ref: '#/definitions/response.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Refresh token  user
+      security:
+      - BearerAuth: []
+      summary: Refresh User's Token
       tags:
       - Auth
   /auth/register:
@@ -251,23 +259,23 @@ paths:
       - application/json
       description: Creates a new user account and securely stores the hashed password.
       parameters:
-      - description: Register payload
+      - description: Payload register
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/ewallet-ums_internal_model_auth_dto.RegisterRequest'
+          $ref: '#/definitions/ewallet-ums_internal_dto_auth_dto.RegisterRequest'
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             allOf:
             - $ref: '#/definitions/response.SuccessResponse'
             - properties:
                 data:
-                  $ref: '#/definitions/ewallet-ums_internal_model_auth_dto.RegisterResponse'
+                  $ref: '#/definitions/ewallet-ums_internal_dto_auth_dto.RegisterResponse'
               type: object
         "400":
           description: Bad Request
@@ -277,7 +285,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Register a new user
+      summary: Register A New User
       tags:
       - Auth
 swagger: "2.0"

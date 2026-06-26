@@ -27,21 +27,21 @@ const docTemplate = `{
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Login user",
+                "summary": "Login User",
                 "parameters": [
                     {
-                        "description": "Payload login",
+                        "description": "Payload login user",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ewallet-ums_internal_model_auth_dto.LoginRequest"
+                            "$ref": "#/definitions/ewallet-ums_internal_dto_auth_dto.LoginRequest"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Success",
                         "schema": {
                             "allOf": [
                                 {
@@ -51,7 +51,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/ewallet-ums_internal_model_auth_dto.LoginResponse"
+                                            "$ref": "#/definitions/ewallet-ums_internal_dto_auth_dto.LoginResponse"
                                         }
                                     }
                                 }
@@ -75,7 +75,12 @@ const docTemplate = `{
         },
         "/auth/logout": {
             "delete": {
-                "description": "Logs out the authenticated user and invalidates the refresh token",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Logs out the authenticated user and invalidates the refresh token.",
                 "consumes": [
                     "application/json"
                 ],
@@ -85,7 +90,7 @@ const docTemplate = `{
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Logout user",
+                "summary": "Logout User",
                 "parameters": [
                     {
                         "type": "string",
@@ -97,15 +102,15 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Success",
                         "schema": {
                             "$ref": "#/definitions/response.SuccessResponse"
                         }
                     },
-                    "400": {
-                        "description": "Bad Request",
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/response.BadRequestResponse"
+                            "$ref": "#/definitions/response.ErrorResponse"
                         }
                     },
                     "500": {
@@ -119,6 +124,11 @@ const docTemplate = `{
         },
         "/auth/refresh-token": {
             "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Generates a new access token using a valid refresh token.",
                 "consumes": [
                     "application/json"
@@ -129,7 +139,7 @@ const docTemplate = `{
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Refresh token  user",
+                "summary": "Refresh User's Token",
                 "parameters": [
                     {
                         "type": "string",
@@ -141,7 +151,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Success",
                         "schema": {
                             "allOf": [
                                 {
@@ -151,17 +161,17 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/ewallet-ums_internal_model_auth_dto.RefreshTokenResponse"
+                                            "$ref": "#/definitions/ewallet-ums_internal_dto_auth_dto.RefreshTokenResponse"
                                         }
                                     }
                                 }
                             ]
                         }
                     },
-                    "400": {
-                        "description": "Bad Request",
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/response.BadRequestResponse"
+                            "$ref": "#/definitions/response.ErrorResponse"
                         }
                     },
                     "500": {
@@ -185,21 +195,21 @@ const docTemplate = `{
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Register a new user",
+                "summary": "Register A New User",
                 "parameters": [
                     {
-                        "description": "Register payload",
+                        "description": "Payload register",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ewallet-ums_internal_model_auth_dto.RegisterRequest"
+                            "$ref": "#/definitions/ewallet-ums_internal_dto_auth_dto.RegisterRequest"
                         }
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "allOf": [
                                 {
@@ -209,7 +219,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/ewallet-ums_internal_model_auth_dto.RegisterResponse"
+                                            "$ref": "#/definitions/ewallet-ums_internal_dto_auth_dto.RegisterResponse"
                                         }
                                     }
                                 }
@@ -245,7 +255,9 @@ const docTemplate = `{
                 "USER_NOT_FOUND",
                 "SESSION_NOT_FOUND",
                 "INVALID_PASSWORD",
+                "WALLET_NOT_FOUND",
                 "INVALID_STATUS_TRANSITION",
+                "DUPLICATE_REFERENCE",
                 "TRANSACTION_NOT_FOUND",
                 "INSUFFICIENT_BALANCE"
             ],
@@ -259,12 +271,14 @@ const docTemplate = `{
                 "ErrCodeUserNotFound",
                 "ErrCodeSessionNotFound",
                 "ErrCodeInvalidPassword",
+                "ErrCodeWalletNotFound",
                 "ErrCodeInvalidStatusTransition",
+                "ErrCodeDuplicateReference",
                 "ErrCodeTransactionNotFound",
                 "ErrCodeInsufficientBalance"
             ]
         },
-        "ewallet-ums_internal_model_auth_dto.LoginRequest": {
+        "ewallet-ums_internal_dto_auth_dto.LoginRequest": {
             "type": "object",
             "required": [
                 "password",
@@ -279,7 +293,7 @@ const docTemplate = `{
                 }
             }
         },
-        "ewallet-ums_internal_model_auth_dto.LoginResponse": {
+        "ewallet-ums_internal_dto_auth_dto.LoginResponse": {
             "type": "object",
             "properties": {
                 "email": {
@@ -302,7 +316,7 @@ const docTemplate = `{
                 }
             }
         },
-        "ewallet-ums_internal_model_auth_dto.RefreshTokenResponse": {
+        "ewallet-ums_internal_dto_auth_dto.RefreshTokenResponse": {
             "type": "object",
             "properties": {
                 "token": {
@@ -310,7 +324,7 @@ const docTemplate = `{
                 }
             }
         },
-        "ewallet-ums_internal_model_auth_dto.RegisterRequest": {
+        "ewallet-ums_internal_dto_auth_dto.RegisterRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -324,7 +338,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "dob": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "1945-08-17"
                 },
                 "email": {
                     "type": "string",
@@ -349,7 +364,7 @@ const docTemplate = `{
                 }
             }
         },
-        "ewallet-ums_internal_model_auth_dto.RegisterResponse": {
+        "ewallet-ums_internal_dto_auth_dto.RegisterResponse": {
             "type": "object",
             "properties": {
                 "address": {
@@ -434,7 +449,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
 	Title:            "E Wallet API (User Management Service)",
-	Description:      "API Service for managing user accounts, authentication, and authorization.\nFeatures include: user registration, login, logout, token refresh, and token validation.\n<br/><b>Developer:</b> Muhammad Brilian Satria Utama\n<b>Environment:</b> Development",
+	Description:      "API Service for managing user accounts, authentication, and authorization.\n<br/><b>Developer:</b> Muhammad Brilian Satria Utama\n<b>Environment:</b> Development",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

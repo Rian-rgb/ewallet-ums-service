@@ -15,16 +15,19 @@ type RegisterHandler struct {
 	RegisterSvc auth.IRegisterService
 }
 
-// @Summary      Register a new user
-// @Description  Creates a new user account and securely stores the hashed password.
-// @Tags         Auth
-// @Accept       json
-// @Produce      json
-// @Param        request  body      auth_dto.RegisterRequest  true  "Register payload"
-// @Success      200      {object}  response.SuccessResponse{data=auth_dto.RegisterResponse}
-// @Failure      400      {object}  response.BadRequestResponse
-// @Failure      500      {object}  response.ErrorResponse
-// @Router       /auth/register [post]
+// @Summary		Register A New User
+// @Description	Creates a new user account and securely stores the hashed password.
+// @Tags		Auth
+// @Accept		json
+// @Produce		json
+//
+// @Param		request			body	auth_dto.RegisterRequest	true	"Payload register"
+//
+// @Success		201	{object}	response.SuccessResponse{data=auth_dto.RegisterResponse}	"Created"
+// @Failure		400	{object}	response.BadRequestResponse									"Bad Request"
+// @Failure		500	{object}	response.ErrorResponse										"Internal Server Error"
+//
+// @Router		/auth/register [post]
 func (hdl *RegisterHandler) Register(ctx *gin.Context) {
 	var (
 		req            auth_dto.RegisterRequest

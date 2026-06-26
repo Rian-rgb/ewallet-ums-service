@@ -15,16 +15,19 @@ type LoginHandler struct {
 	LoginSvc auth.ILoginService
 }
 
-// @Summary      Login user
-// @Description  Authenticates user credentials (username and password).
-// @Tags         Auth
-// @Accept       json
-// @Produce      json
-// @Param        request  body      auth_dto.LoginRequest  true  "Payload login"
-// @Success      200      {object}  response.SuccessResponse{data=auth_dto.LoginResponse}
-// @Failure      400      {object}  response.BadRequestResponse
-// @Failure      500      {object}  response.ErrorResponse
-// @Router       /auth/login [post]
+// @Summary		Login User
+// @Description	Authenticates user credentials (username and password).
+// @Tags		Auth
+// @Accept		json
+// @Produce		json
+//
+// @Param		request		body	auth_dto.LoginRequest 	true	"Payload login user"
+//
+// @Success		200	{object}	response.SuccessResponse{data=auth_dto.LoginResponse}	"Success"
+// @Failure		400	{object}	response.BadRequestResponse								"Bad Request"
+// @Failure		500	{object}	response.ErrorResponse									"Internal Server Error"
+//
+// @Router		/auth/login [post]
 func (hdl *LoginHandler) Login(ctx *gin.Context) {
 	var (
 		req            auth_dto.LoginRequest

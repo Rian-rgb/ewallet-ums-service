@@ -11,7 +11,6 @@ import (
 // @title           E Wallet API (User Management Service)
 // @version         0.0
 // @description     API Service for managing user accounts, authentication, and authorization.
-// @description     Features include: user registration, login, logout, token refresh, and token validation.
 // @description     <br/><b>Developer:</b> Muhammad Brilian Satria Utama
 // @description     <b>Environment:</b> Development
 // @host            localhost:8080
