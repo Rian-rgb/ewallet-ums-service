@@ -30,7 +30,7 @@ const docTemplate = `{
                 "summary": "Login User",
                 "parameters": [
                     {
-                        "description": "Payload login user",
+                        "description": "Request Body",
                         "name": "request",
                         "in": "body",
                         "required": true,
@@ -198,7 +198,7 @@ const docTemplate = `{
                 "summary": "Register A New User",
                 "parameters": [
                     {
-                        "description": "Payload register",
+                        "description": "Request Body",
                         "name": "request",
                         "in": "body",
                         "required": true,

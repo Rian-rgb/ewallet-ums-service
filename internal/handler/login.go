@@ -21,7 +21,7 @@ type LoginHandler struct {
 // @Accept		json
 // @Produce		json
 //
-// @Param		request		body	auth_dto.LoginRequest 	true	"Payload login user"
+// @Param		request		body	auth_dto.LoginRequest 	true	"Request Body"
 //
 // @Success		200	{object}	response.SuccessResponse{data=auth_dto.LoginResponse}	"Success"
 // @Failure		400	{object}	response.BadRequestResponse								"Bad Request"

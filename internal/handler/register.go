@@ -21,7 +21,7 @@ type RegisterHandler struct {
 // @Accept		json
 // @Produce		json
 //
-// @Param		request			body	auth_dto.RegisterRequest	true	"Payload register"
+// @Param		request			body	auth_dto.RegisterRequest	true	"Request Body"
 //
 // @Success		201	{object}	response.SuccessResponse{data=auth_dto.RegisterResponse}	"Created"
 // @Failure		400	{object}	response.BadRequestResponse									"Bad Request"

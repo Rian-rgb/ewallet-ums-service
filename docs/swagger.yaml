@@ -157,7 +157,7 @@ paths:
       - application/json
       description: Authenticates user credentials (username and password).
       parameters:
-      - description: Payload login user
+      - description: Request Body
         in: body
         name: request
         required: true
@@ -259,7 +259,7 @@ paths:
       - application/json
       description: Creates a new user account and securely stores the hashed password.
       parameters:
-      - description: Payload register
+      - description: Request Body
         in: body
         name: request
         required: true

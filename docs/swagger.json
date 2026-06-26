@@ -24,7 +24,7 @@
                 "summary": "Login User",
                 "parameters": [
                     {
-                        "description": "Payload login user",
+                        "description": "Request Body",
                         "name": "request",
                         "in": "body",
                         "required": true,
@@ -192,7 +192,7 @@
                 "summary": "Register A New User",
                 "parameters": [
                     {
-                        "description": "Payload register",
+                        "description": "Request Body",
                         "name": "request",
                         "in": "body",
                         "required": true,
