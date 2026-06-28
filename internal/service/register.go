@@ -6,7 +6,7 @@ import (
 	"ewallet-ums/internal/domain/user"
 	internalErrors "ewallet-ums/internal/errors"
 	"github.com/Rian-rgb/ewallet-common-lib/logger"
-	"golang.org/x/crypto/bcrypt"
+	"github.com/Rian-rgb/ewallet-common-lib/security"
 )
 
 type RegisterService struct {
@@ -15,12 +15,12 @@ type RegisterService struct {
 }
 
 func (svc *RegisterService) Register(ctx context.Context, user *user.Entity) (*user.Entity, error) {
-	hashPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	hashPassword, err := security.HashPassword(user.Password)
 	if err != nil {
 		return nil, err
 	}
 
-	user.Password = string(hashPassword)
+	user.Password = hashPassword
 
 	err = svc.UserRepo.Save(user)
 	if err != nil {

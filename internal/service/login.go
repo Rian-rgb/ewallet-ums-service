@@ -8,7 +8,6 @@ import (
 	"github.com/Rian-rgb/ewallet-common-lib/redis"
 	"github.com/Rian-rgb/ewallet-common-lib/security"
 	"github.com/pkg/errors"
-	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -39,7 +38,7 @@ func (svc *LoginService) Login(
 		return nil, "", "", internalErrors.ErrInternalServerError
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(userEntity.Password), []byte(password))
+	err = security.VerifyPassword(userEntity.Password, password)
 	if err != nil {
 		return nil, "", "", internalErrors.ErrInvalidPassword
 	}
