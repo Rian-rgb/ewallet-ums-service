@@ -12,8 +12,8 @@ github.com/PuerkitoBio/purell v1.1.1 h1:WEQqlqaGbrPkxLJWfBwQmfEAE1Z7ONdDLqrN38tN
 github.com/PuerkitoBio/purell v1.1.1/go.mod h1:c11w/QuzBsJSee3cPx9rAFu61PvFxuPbtSwDGJws/X0=
 github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 h1:d+Bc7a5rLufV/sSk/8dngufqelfh6jnri85riMAaF/M=
 github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578/go.mod h1:uGdkoq3SwY9Y+13GIhn11/XLaGBb4BfwItxLd5jeuXE=
-github.com/Rian-rgb/ewallet-common-lib v0.0.0-20260628081403-9a93dbf9e5e2 h1:jagNEGZkPc/1P6HtPfeVnJ/4WNFPe4dBxxmgZfgpX+0=
-github.com/Rian-rgb/ewallet-common-lib v0.0.0-20260628081403-9a93dbf9e5e2/go.mod h1:9vM37cS/ku3HCN1DB3vTxZ+yP5NIEDKIAOcsMySfKo8=
+github.com/Rian-rgb/ewallet-common-lib v0.0.0-20260629153804-7cc624d38e3c h1:DSLYgslyjyrD+Czutv/eUdDxC+ApPoyY7lZjb5Baihg=
+github.com/Rian-rgb/ewallet-common-lib v0.0.0-20260629153804-7cc624d38e3c/go.mod h1:9vM37cS/ku3HCN1DB3vTxZ+yP5NIEDKIAOcsMySfKo8=
 github.com/Rian-rgb/ewallet-proto v0.1.1 h1:uUigphO5kCnafRfap6SeGpNvBv17sEDpz72QMNvKG/o=
 github.com/Rian-rgb/ewallet-proto v0.1.1/go.mod h1:WWYRfdHRNsqnYYDQQ2f9JPiCbLMVKUwoC0tdEbYiAHo=
 github.com/bsm/ginkgo/v2 v2.12.0 h1:Ny8MWAHyOepLGlLKYmXG4IEkioBysk6GpaRTLC8zwWs=

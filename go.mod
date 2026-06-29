@@ -3,7 +3,7 @@ module ewallet-ums
 go 1.25.7
 
 require (
-	github.com/Rian-rgb/ewallet-common-lib v0.0.0-20260628081403-9a93dbf9e5e2
+	github.com/Rian-rgb/ewallet-common-lib v0.0.0-20260629153804-7cc624d38e3c
 	github.com/Rian-rgb/ewallet-proto v0.1.1
 	github.com/gin-gonic/gin v1.12.0
 	github.com/go-playground/validator/v10 v10.30.2
@@ -11,7 +11,6 @@ require (
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.1
 	github.com/swaggo/swag v1.16.6
-	golang.org/x/crypto v0.51.0
 	google.golang.org/grpc v1.81.1
 	gorm.io/gorm v1.31.1
 )
@@ -108,6 +107,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.43.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	golang.org/x/arch v0.22.0 // indirect
+	golang.org/x/crypto v0.51.0 // indirect
 	golang.org/x/mod v0.35.0 // indirect
 	golang.org/x/net v0.53.0 // indirect
 	golang.org/x/sync v0.20.0 // indirect

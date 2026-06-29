@@ -2,6 +2,7 @@ package http
 
 import (
 	"ewallet-ums/infra"
+	"github.com/Rian-rgb/ewallet-common-lib/config"
 
 	"github.com/Rian-rgb/ewallet-common-lib/middleware"
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,7 @@ func registerAuthRoutes(
 		middleware.RefreshTokenMiddleware(
 			appDeps.JWTManager.ValidateToken,
 			*appDeps.RedisRepo,
+			config.GetEnv("SECRET_KEY_ENCRYPT", ""),
 		),
 		dependency.RefreshTokenHdl.RefreshToken,
 	)

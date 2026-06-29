@@ -4,6 +4,7 @@ import (
 	"context"
 	"ewallet-ums/internal/domain/user"
 	internalErrors "ewallet-ums/internal/errors"
+	"github.com/Rian-rgb/ewallet-common-lib/config"
 	"github.com/Rian-rgb/ewallet-common-lib/logger"
 	"github.com/Rian-rgb/ewallet-common-lib/redis"
 	"github.com/Rian-rgb/ewallet-common-lib/security"
@@ -28,6 +29,8 @@ func (svc *LoginService) Login(
 	err error,
 ) {
 
+	secretKeyEncrypt := config.GetEnv("SECRET_KEY_ENCRYPT", "")
+
 	userEntity, err = svc.UserRepo.FindByUsername(username)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -43,7 +46,7 @@ func (svc *LoginService) Login(
 		return nil, "", "", internalErrors.ErrInvalidPassword
 	}
 
-	token, err = svc.JwtManager.GenerateToken(
+	token, jtiToken, err := svc.JwtManager.GenerateToken(
 		userEntity.ID,
 		userEntity.Username,
 		userEntity.FullName,
@@ -56,7 +59,7 @@ func (svc *LoginService) Login(
 		return nil, "", "", internalErrors.ErrInternalServerError
 	}
 
-	refreshToken, err = svc.JwtManager.GenerateToken(
+	refreshToken, jtiRefreshToken, err := svc.JwtManager.GenerateToken(
 		userEntity.ID,
 		userEntity.Username,
 		userEntity.FullName,
@@ -69,7 +72,7 @@ func (svc *LoginService) Login(
 		return nil, "", "", internalErrors.ErrInternalServerError
 	}
 
-	refreshTokenKey := redis.RefreshTokenPrefix + refreshToken
+	refreshTokenKey := redis.RefreshTokenPrefix + jtiRefreshToken
 	err = svc.RedisRepo.Set(ctx, refreshTokenKey, userEntity.ID, redis.RefreshTokenDuration)
 	if err != nil {
 
@@ -77,7 +80,7 @@ func (svc *LoginService) Login(
 		return nil, "", "", internalErrors.ErrInternalServerError
 	}
 
-	userTokenKey := redis.UserTokenPrefix + token
+	userTokenKey := redis.UserTokenPrefix + jtiToken
 	err = svc.RedisRepo.Set(ctx, userTokenKey, refreshTokenKey, redis.UserTokenDuration)
 	if err != nil {
 
@@ -85,5 +88,12 @@ func (svc *LoginService) Login(
 		return nil, "", "", internalErrors.ErrInternalServerError
 	}
 
-	return userEntity, token, refreshToken, nil
+	encryptedRefreshToken, err := security.Encrypt([]byte(refreshToken), []byte(secretKeyEncrypt))
+	if err != nil {
+
+		logger.WithContext(ctx).Error("failed to encrypt refresh token: ", err)
+		return nil, "", "", internalErrors.ErrInternalServerError
+	}
+
+	return userEntity, token, encryptedRefreshToken, nil
 }

@@ -6,16 +6,20 @@ import (
 	internalErrors "ewallet-ums/internal/errors"
 	"github.com/Rian-rgb/ewallet-common-lib/logger"
 	"github.com/Rian-rgb/ewallet-common-lib/redis"
+	"github.com/Rian-rgb/ewallet-common-lib/security"
 )
 
 type LogoutService struct {
-	UserRepo  user.IRepository
-	RedisRepo *redis.RedisRepository
+	UserRepo   user.IRepository
+	JwtManager *security.JWTManager
+	RedisRepo  *redis.RedisRepository
 }
 
 func (svc *LogoutService) Logout(ctx context.Context, token string) error {
 
-	userTokenKey := redis.UserTokenPrefix + token
+	claim, _ := svc.JwtManager.ValidateToken(token)
+
+	userTokenKey := redis.UserTokenPrefix + claim.ID
 	refreshTokenKey, err := svc.RedisRepo.Get(ctx, userTokenKey)
 	if err != nil {
 

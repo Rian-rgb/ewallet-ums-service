@@ -35,7 +35,7 @@ func (svc *TokenValidationService) TokenValidation(ctx context.Context, token st
 		return nil, internalErrors.ErrTokenExpired
 	}
 
-	userTokenKey := redis.UserTokenPrefix + token
+	userTokenKey := redis.UserTokenPrefix + claimToken.ID
 	exists, err := svc.RedisRepo.Exists(ctx, userTokenKey)
 	if err != nil {
 

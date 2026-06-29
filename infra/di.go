@@ -38,8 +38,9 @@ func DependencyInject(appDeps *AppDependencies) *Dependency {
 	}
 
 	logoutSvc := &service.LogoutService{
-		UserRepo:  userRepo,
-		RedisRepo: appDeps.RedisRepo,
+		UserRepo:   userRepo,
+		JwtManager: appDeps.JWTManager,
+		RedisRepo:  appDeps.RedisRepo,
 	}
 
 	refreshSvc := &service.RefrshTokenService{

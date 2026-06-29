@@ -4,7 +4,7 @@ import (
 	"context"
 	"ewallet-ums/internal/domain/user"
 	internalErrors "ewallet-ums/internal/errors"
-	"fmt"
+	"github.com/Rian-rgb/ewallet-common-lib/config"
 	"github.com/Rian-rgb/ewallet-common-lib/logger"
 	"github.com/Rian-rgb/ewallet-common-lib/redis"
 	"github.com/Rian-rgb/ewallet-common-lib/security"
@@ -16,9 +16,11 @@ type RefrshTokenService struct {
 	RedisRepo  *redis.RedisRepository
 }
 
-func (svc *RefrshTokenService) RefreshToken(ctx context.Context, refreshToken string, tokenClaim security.Token) (token string, err error) {
+func (svc *RefrshTokenService) RefreshToken(ctx context.Context, encryptedRefreshToken string, tokenClaim security.Token) (token string, err error) {
 
-	token, err = svc.JwtManager.GenerateToken(
+	secretKeyEncrypt := config.GetEnv("SECRET_KEY_ENCRYPT", "")
+
+	token, jtiToken, err := svc.JwtManager.GenerateToken(
 		tokenClaim.UserID,
 		tokenClaim.Username,
 		tokenClaim.FullName,
@@ -31,10 +33,16 @@ func (svc *RefrshTokenService) RefreshToken(ctx context.Context, refreshToken st
 		return "", internalErrors.ErrInternalServerError
 	}
 
-	refreshTokenKey := redis.RefreshTokenPrefix + refreshToken
-	userTokenKey := redis.UserTokenPrefix + token
+	refreshToken, err := security.Decrypt(encryptedRefreshToken, []byte(secretKeyEncrypt))
+	if err != nil {
+
+		logger.WithContext(ctx).Error("failed to decrypt refresh token: ", err)
+		return "", internalErrors.ErrInternalServerError
+	}
+
+	refreshTokenKey := redis.RefreshTokenPrefix + string(refreshToken)
+	userTokenKey := redis.UserTokenPrefix + jtiToken
 	err = svc.RedisRepo.Set(ctx, userTokenKey, refreshTokenKey, redis.UserTokenDuration)
-	fmt.Println("test")
 	if err != nil {
 
 		logger.WithContext(ctx).Error("failed to add user token in redis: ", err)
